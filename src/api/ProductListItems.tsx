@@ -15,7 +15,10 @@ type ProductListItemsProps = {
 
 const ProductListItems = ({ product }: ProductListItemsProps) => {
   return (
-    <Link href={`/${product.id}`} asChild>
+    <Link
+      href={{ pathname: "/(tabs)/menu/[id]", params: { id: `${product.id}` } }}
+      asChild
+    >
       <Pressable style={styles.container}>
         <Image
           style={styles.images}

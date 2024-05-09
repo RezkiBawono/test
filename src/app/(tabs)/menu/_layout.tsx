@@ -1,5 +1,4 @@
 import { Stack } from "expo-router/stack";
-import products from "../../../../assets/data/products";
 
 export default function Layout() {
   return (

@@ -1,7 +1,14 @@
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  Pressable,
+} from "react-native";
 import { Stack } from "expo-router/stack";
 
-import React from "react";
+import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
@@ -9,32 +16,49 @@ import Colors from "@/constants/Colors";
 const defaultImageLink =
   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png";
 
-// type ProductDetailItemProps = {
-//   product: Product;
-// };
-
 const pizzaSize = ["S", "M", "L", "Xl"];
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
 
-  const product = products.find((p) => p.id.toString() == id);
+  const [selectedSize, setSelectedSize] = useState("M");
 
-  // This statement is to make sure that product is type safe i.e (product.name) not (product?.name)
+  const product = products.find((p) => p.id.toString() == id);
+  // This function is to dynamically choose each object inside products
+
   if (!product) {
     return <Text>Product is not Found</Text>;
   }
+  // This statement is to make sure that product is type safe i.e (product.name) not (product?.name)
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: product.name }} />
+      <Stack.Screen options={{ title: product.name || defaultImageLink }} />
       <Image style={styles.images} source={{ uri: product.image }} />
       <Text>Select Size</Text>
       <View style={styles.sizes}>
         {pizzaSize.map((size) => (
-          <View style={styles.size} key={size}>
-            <Text style={styles.sizeText}>{size}</Text>
-          </View>
+          <Pressable
+            onPress={() => {
+              setSelectedSize(size); // This function is to choose between pizzaSize
+            }}
+            style={[
+              styles.sizeTextContainer,
+              { backgroundColor: selectedSize == size ? "grey" : "white" },
+            ]}
+            key={size}
+          >
+            <Text
+              style={[
+                styles.sizeText,
+                {
+                  color: selectedSize == size ? "white" : "black",
+                },
+              ]}
+            >
+              {size}
+            </Text>
+          </Pressable>
         ))}
       </View>
 
@@ -54,7 +78,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   images: {
-    width: "100%",
+    width: "80%",
     aspectRatio: 1,
     alignSelf: "center",
   },
@@ -64,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginVertical: 10,
   },
-  size: {
+  sizeTextContainer: {
     backgroundColor: "grey",
     width: 50,
     aspectRatio: 1,
@@ -79,6 +103,7 @@ const styles = StyleSheet.create({
   names: {
     fontSize: 20,
     fontWeight: "bold",
+    margin: "auto",
   },
   prices: { color: Colors.light.tint, fontSize: 20, fontWeight: "bold" },
 });

@@ -38,8 +38,13 @@ const ProductDetailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: product.name || defaultImageLink }} />
-      <Image style={styles.images} source={{ uri: product.image }} />
+      <Stack.Screen
+        options={{ title: product.name, headerTitleAlign: "center" }}
+      />
+      <Image
+        style={styles.images}
+        source={{ uri: product.image || defaultImageLink }}
+      />
       <Text>Select Size</Text>
       <View style={styles.sizes}>
         {pizzaSize.map((size) => (

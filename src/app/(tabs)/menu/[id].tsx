@@ -68,7 +68,7 @@ const ProductDetailScreen = () => {
       </View>
 
       <Text style={styles.names}>{product.name}</Text>
-      <Text style={styles.prices}>{product.price}</Text>
+      <Text style={styles.prices}>${product.price}</Text>
       <Button text="Add to cart" onPress={addToCart} />
     </View>
   );
@@ -111,5 +111,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: "auto",
   },
-  prices: { color: Colors.light.tint, fontSize: 20, fontWeight: "bold" },
+  prices: {
+    color: Colors.light.tint,
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: "auto",
+  },
 });

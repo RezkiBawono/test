@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
+import Button from "@/components/Button";
 
 const defaultImageLink =
   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png";
@@ -25,6 +26,10 @@ const ProductDetailScreen = () => {
 
   const product = products.find((p) => p.id.toString() == id);
   // This function is to dynamically choose each object inside products
+
+  const addToCart = () => {
+    console.warn("Adding to cart");
+  };
 
   if (!product) {
     return <Text>Product is not Found</Text>;
@@ -64,7 +69,7 @@ const ProductDetailScreen = () => {
 
       <Text style={styles.names}>{product.name}</Text>
       <Text style={styles.prices}>{product.price}</Text>
-      <Text>Add to Cart</Text>
+      <Button text="Add to cart" onPress={addToCart} />
     </View>
   );
 };
@@ -95,6 +100,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 2,
   },
   sizeText: {
     fontSize: 20,

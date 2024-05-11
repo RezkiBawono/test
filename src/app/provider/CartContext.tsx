@@ -10,14 +10,16 @@ export const CartContext = createContext<CartProvider>({
   items: [],
   addItem: () => {},
 });
-//This variable is a default and TS standart
+//This variable is a default and adress to TS standart
 
 export default function CartContextProvider({ children }: PropsWithChildren) {
   const [items, setItems] = useState<CartItem[]>([]);
 
+  //TODO : if an item already added then increment by 1
+
   const addItem = (product: Product, size: CartItem["size"]) => {
     const addItemCart: CartItem = {
-      id: "1",
+      id: "1", // TODO : id must be randomized
       product,
       product_id: product.id,
       size,
@@ -26,6 +28,8 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
 
     setItems([addItemCart, ...items]);
   };
+
+  // TODO : update quantity
 
   return (
     <CartContext.Provider value={{ items, addItem }}>

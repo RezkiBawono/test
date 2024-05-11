@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { Stack } from "expo-router/stack";
 
 import React, { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
@@ -17,6 +17,8 @@ const ProductDetailScreen = () => {
 
   const { addItem } = UseCart();
 
+  const router = useRouter();
+
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
 
   const product = products.find((p) => p.id.toString() == id);
@@ -27,6 +29,7 @@ const ProductDetailScreen = () => {
       return;
     }
     addItem(product, selectedSize);
+    router.push("/cart");
   };
 
   if (!product) {

@@ -28,7 +28,7 @@ const ProductDetailScreen = () => {
   // This function is to dynamically choose each object inside products
 
   const addToCart = () => {
-    console.warn("Adding to cart");
+    console.warn("Adding to cart, Size :", selectedSize);
   };
 
   if (!product) {

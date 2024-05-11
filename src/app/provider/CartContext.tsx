@@ -1,5 +1,6 @@
 import { createContext, useContext, PropsWithChildren, useState } from "react";
 import { CartItem, Product } from "@/types";
+import { randomUUID } from "expo-crypto";
 
 type CartProvider = {
   items: CartItem[];
@@ -18,15 +19,15 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
   //TODO : if an item already added then increment by 1
 
   const addItem = (product: Product, size: CartItem["size"]) => {
-    const addItemCart: CartItem = {
-      id: "1", // TODO : id must be randomized
+    const newItemCart: CartItem = {
+      id: randomUUID(),
       product,
       product_id: product.id,
       size,
       quantity: 1,
     };
 
-    setItems([addItemCart, ...items]);
+    setItems([newItemCart, ...items]);
   };
 
   // TODO : update quantity

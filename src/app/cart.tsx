@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useCart } from "./provider/CartContext";
+import { UseCart } from "./provider/CartContext";
 
 const CartScreen = () => {
-  const { items } = useCart();
+  const { items } = UseCart();
 
   return (
     <View>

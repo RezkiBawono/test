@@ -4,10 +4,7 @@ import React from "react";
 import { Product } from "@/types";
 import Colors from "@/constants/Colors";
 import { Link } from "expo-router";
-
-const defaultImageLink =
-  "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png";
-// need to add this and add inside source prop to work with TS
+import defaultImageLink from "@/constants/DefaultImage";
 
 type ProductListItemsProps = {
   product: Product;

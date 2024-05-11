@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { Stack } from "expo-router/stack";
 
 import React, { useState } from "react";
@@ -13,22 +6,27 @@ import { useLocalSearchParams } from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
+import { UseCart } from "@/app/provider/CartContext";
+import { PizzaSize } from "@/types";
+import defaultImageLink from "@/constants/DefaultImage";
 
-const defaultImageLink =
-  "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png";
-
-const pizzaSize = ["S", "M", "L", "Xl"];
+const pizzaSize: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
 
-  const [selectedSize, setSelectedSize] = useState("M");
+  const { addItem } = UseCart();
+
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
 
   const product = products.find((p) => p.id.toString() == id);
   // This function is to dynamically choose each object inside products
 
   const addToCart = () => {
-    console.warn("Adding to cart, Size :", selectedSize);
+    if (!product) {
+      return;
+    }
+    addItem(product, selectedSize);
   };
 
   if (!product) {

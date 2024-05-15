@@ -13,7 +13,7 @@ export default function MenuStack() {
           title: "Menu",
           headerTitleAlign: "center",
           headerRight: () => (
-            <Link href="/" asChild>
+            <Link href="/(admin)/menu/CreatePizzaScreen" asChild>
               {/* TODO adding create a pizza screen */}
               <Pressable>
                 {({ pressed }) => (

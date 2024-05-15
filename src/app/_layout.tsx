@@ -56,7 +56,15 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <CartContextProvider>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(admin)"
+            options={{
+              headerStyle: {
+                backgroundColor: "#1580ae",
+              },
+            }}
+          />
+          <Stack.Screen name="(user)" options={{ headerShown: false }} />
           <Stack.Screen name="cart" options={{ presentation: "modal" }} />
         </Stack>
       </CartContextProvider>

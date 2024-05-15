@@ -6,7 +6,6 @@ type CartProvider = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
   updateQuantity: (itemId: string, amount: -1 | 1) => void;
-
   total: number;
 };
 
@@ -20,8 +19,6 @@ export const CartContext = createContext<CartProvider>({
 
 export default function CartContextProvider({ children }: PropsWithChildren) {
   const [items, setItems] = useState<CartItem[]>([]);
-
-  //TODO : if an item already added then increment by 1
 
   const addItem = (product: Product, size: CartItem["size"]) => {
     const existingItems = items.find(

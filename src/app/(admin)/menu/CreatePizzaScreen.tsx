@@ -1,18 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TextInput } from "react-native";
 import React, { useState } from "react";
-import {
-  useForm,
-  Controller,
-  SubmitHandler,
-  FieldValues,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 

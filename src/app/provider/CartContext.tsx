@@ -6,14 +6,17 @@ type CartProvider = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
   updateQuantity: (itemId: string, amount: -1 | 1) => void;
+
+  total: number;
 };
 
 export const CartContext = createContext<CartProvider>({
   items: [],
   addItem: () => {},
   updateQuantity: () => {},
+  total: 0,
 });
-//This variable is a default and adress to TS standart
+// This variable is a default and adress to TS standart
 
 export default function CartContextProvider({ children }: PropsWithChildren) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -21,6 +24,15 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
   //TODO : if an item already added then increment by 1
 
   const addItem = (product: Product, size: CartItem["size"]) => {
+    const existingItems = items.find(
+      (item) => item.product === product && item.size === size
+    );
+    if (existingItems) {
+      updateQuantity(existingItems.id, 1);
+      return;
+    }
+    // This function is to add existing item by one if already in the cart
+
     const newItemCart: CartItem = {
       id: randomUUID(),
       product,
@@ -40,12 +52,18 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
       .filter((item) => item.quantity > 0);
     setItems(updatedItems);
   };
-  //This function is used to update an item in the cart
+  // This function is used to update an item in the cart
 
-  // TODO : update quantity
+  const totalString = items
+    .reduce((sum, item) => (sum += item.product.price * item.quantity), 0)
+    // This function is to add total of prices in cart
+    .toFixed(2);
+  // rounded the number of decimal by 2 ( but make it string)
+  const total = parseFloat(totalString);
+  // convert from string to number
 
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity, total }}>
       {children}
     </CartContext.Provider>
   );

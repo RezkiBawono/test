@@ -3,7 +3,7 @@ import React from "react";
 
 import { Product } from "@/types";
 import Colors from "@/constants/Colors";
-import { Link } from "expo-router";
+import { Href, Link, useSegments } from "expo-router";
 import defaultImageLink from "@/constants/DefaultImage";
 
 type ProductListItemsProps = {
@@ -11,9 +11,14 @@ type ProductListItemsProps = {
 };
 
 const ProductListItems = ({ product }: ProductListItemsProps) => {
+  const segments = useSegments();
+
   return (
     <Link
-      href={{ pathname: "/(tabs)/menu/[id]", params: { id: `${product.id}` } }}
+      href={{
+        pathname: `/${segments[0]}/menu/[id]` as Href<string>,
+        params: { id: `${product.id}` as Href<string> },
+      }}
       asChild
     >
       <Pressable style={styles.container}>

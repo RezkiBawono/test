@@ -24,7 +24,7 @@ const CreatePizzaScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: defaultImageLink }} />
+      <Image style={styles.image} source={{ uri: "" }} />
       <Text style={styles.text}>Name</Text>
       <Controller
         control={control}
@@ -66,6 +66,9 @@ const CreatePizzaScreen = () => {
     </View>
   );
 };
+
+// TODO : create error handling
+// TODO : make sure the keyboard doesnt obstruct the form
 
 export default CreatePizzaScreen;
 

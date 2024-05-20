@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
+import * as ImagePicker from "expo-image-picker";
+import Colors from "@/constants/Colors";
 
 type FormData = {
   name: string;
@@ -15,6 +17,7 @@ const CreatePizzaScreen = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const [image, setImage] = useState<string | null>(null);
   const [submittedData, setSubmittedData] = useState<FormData>();
 
   const onSubmit = (data: FormData) => {
@@ -22,9 +25,33 @@ const CreatePizzaScreen = () => {
     setSubmittedData(data);
   };
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: "" }} />
+      <Image
+        style={styles.image}
+        source={{ uri: image || defaultImageLink }}
+        resizeMode="contain"
+      />
+      <Text onPress={pickImage} style={styles.textButton}>
+        Select Image
+      </Text>
+
       <Text style={styles.text}>Name</Text>
       <Controller
         control={control}
@@ -49,7 +76,7 @@ const CreatePizzaScreen = () => {
             onChangeText={onChange}
             value={value}
             style={styles.input}
-            placeholder="9.99"
+            placeholder="$9.99"
           />
         )}
         name="price"
@@ -69,6 +96,7 @@ const CreatePizzaScreen = () => {
 
 // TODO : create error handling
 // TODO : make sure the keyboard doesnt obstruct the form
+// TODO : make a feature to go back after you submit the form
 
 export default CreatePizzaScreen;
 
@@ -83,6 +111,12 @@ const styles = StyleSheet.create({
   },
   text: {
     margin: 4,
+  },
+  textButton: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: Colors.light.tint,
+    marginVertical: 10,
   },
   input: {
     height: 40,

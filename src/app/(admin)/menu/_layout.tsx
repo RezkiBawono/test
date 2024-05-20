@@ -51,6 +51,10 @@ export default function MenuStack() {
           ),
         }}
       />
+      <Stack.Screen
+        name="CreatePizzaScreen"
+        options={{ title: "Create a Pizza", headerTitleAlign: "center" }}
+      />
     </Stack>
   );
 }

@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
+import { Stack } from "expo-router";
 
 type FormData = {
   name: string;

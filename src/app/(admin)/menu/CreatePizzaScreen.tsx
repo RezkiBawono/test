@@ -16,10 +16,11 @@ import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
 
-// TODO : create error handling
-// TODO : make sure the keyboard doesnt obstruct the form
-// TODO : make a feature to go back after you submit the
-// TODO : create a form validation
+// TODO : create a simple error handling - DONE
+// TODO : make sure the keyboard doesnt obstruct the form - DONE
+// TODO : fix the form when u have time
+// TODO : make a feature to go back after you submit the form
+// TODO : create a simple form validation - DONE
 
 type FormData = {
   name: string;
@@ -91,6 +92,8 @@ const CreatePizzaScreen = () => {
         <Text style={styles.text}>Name</Text>
         <Controller
           control={control}
+          name="name"
+          rules={{ required: "Please enter the name of the pizza" }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               onBlur={onBlur}
@@ -103,12 +106,16 @@ const CreatePizzaScreen = () => {
               placeholder="Margarita.."
             />
           )}
-          name="name"
         />
+        {errors.name && (
+          <Text style={{ color: "red" }}>{errors.name.message}</Text>
+        )}
 
         <Text style={styles.text}>Price</Text>
         <Controller
           control={control}
+          name="price"
+          rules={{ required: "Please enter the price of the pizza" }}
           render={({ field: { onBlur, onChange, value } }) => (
             <TextInput
               onBlur={onBlur}
@@ -121,8 +128,11 @@ const CreatePizzaScreen = () => {
               placeholder="$9.99"
             />
           )}
-          name="price"
         />
+        {errors.price && (
+          <Text style={{ color: "red" }}>{errors.price.message}</Text>
+        )}
+
         <Button text="Create a Pizza" onPress={handleSubmit(onSubmit)} />
 
         {/* {errors.name && <Text style={styles.errorText}>{errors.name}</Text>} */}
@@ -165,7 +175,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 6,
     padding: 8,
   },
   inputWithKeyboard: {

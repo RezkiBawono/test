@@ -15,27 +15,19 @@ const pizzaSize: PizzaSize[] = ["S", "M", "L", "XL"];
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams();
 
-  const { addItem } = UseCart();
-
   const router = useRouter();
-
-  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
 
   const product = products.find((p) => p.id.toString() == id);
   // This function is to dynamically choose each object inside products
-
-  const addToCart = () => {
-    if (!product) {
-      return;
-    }
-    addItem(product, selectedSize);
-    router.push("/cart");
-  };
 
   if (!product) {
     return <Text>Product is not Found</Text>;
   }
   // This statement is to make sure that product is type safe i.e (product.name) not (product?.name)
+
+  const handleUpdate = () => {};
+
+  const handleDelete = () => {};
 
   return (
     <View style={styles.container}>
@@ -49,6 +41,8 @@ const ProductDetailScreen = () => {
 
       <Text style={styles.names}>{product.name}</Text>
       <Text style={styles.prices}>${product.price}</Text>
+      <Button text="Update Pizza" />
+      <Button text="Delete Pizza" />
     </View>
   );
 };

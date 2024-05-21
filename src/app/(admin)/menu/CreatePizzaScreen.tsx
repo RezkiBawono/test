@@ -15,11 +15,12 @@ import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
+import { router } from "expo-router";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
 // TODO : fix the form when u have time
-// TODO : make a feature to go back after you submit the form
+// TODO : make a reset feature after you submit the form
 // TODO : create a simple form validation - DONE
 
 type FormData = {
@@ -31,7 +32,9 @@ const CreatePizzaScreen = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState,
+    formState: { errors, isSubmitSuccessful },
+    reset,
   } = useForm<FormData>();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [image, setImage] = useState<string | null>(null);
@@ -54,9 +57,14 @@ const CreatePizzaScreen = () => {
   }, []);
 
   const onSubmit = (data: FormData) => {
-    console.log("submittedData :", data);
     setSubmittedData(data);
+    console.log("submittedData :", data);
   };
+  React.useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, submittedData, reset]);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library

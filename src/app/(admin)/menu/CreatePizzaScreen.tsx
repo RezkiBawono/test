@@ -59,6 +59,8 @@ const CreatePizzaScreen = () => {
   const onSubmit = (data: FormData) => {
     setSubmittedData(data);
     console.log("submittedData :", data);
+
+    // creating a product in database
   };
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {

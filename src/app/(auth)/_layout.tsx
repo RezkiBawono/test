@@ -6,7 +6,7 @@ const AuthStack = () => {
   return (
     <Stack screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Screen name="sign-in" options={{ title: "Sign In" }} />
-      <Stack.Screen name="sign-out" options={{ title: "Sign Out" }} />
+      <Stack.Screen name="sign-up" options={{ title: "Sign Up" }} />
     </Stack>
   );
 };

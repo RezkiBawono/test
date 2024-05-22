@@ -15,7 +15,6 @@ import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
-import { router } from "expo-router";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE

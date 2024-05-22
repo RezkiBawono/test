@@ -3,7 +3,7 @@ import React from "react";
 import Button from "../components/Button";
 import { Link } from "expo-router";
 
-const index = () => {
+const IndexScreen = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
       <Link href={"/(admin)"} asChild>
@@ -12,8 +12,11 @@ const index = () => {
       <Link href={"/(user)"} asChild>
         <Button text="User" />
       </Link>
+      <Link href={"/(auth)"} asChild>
+        <Button text="Auth" />
+      </Link>
     </View>
   );
 };
 
-export default index;
+export default IndexScreen;

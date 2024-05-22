@@ -65,6 +65,7 @@ function RootLayoutNav() {
             }}
           />
           <Stack.Screen name="(user)" options={{}} />
+          <Stack.Screen name="(auth)" options={{}} />
           <Stack.Screen name="cart" options={{ presentation: "modal" }} />
         </Stack>
       </CartContextProvider>

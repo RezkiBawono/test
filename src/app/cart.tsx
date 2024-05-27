@@ -7,6 +7,8 @@ import Button from "@/components/Button";
 const CartScreen = () => {
   const { items, total } = UseCart();
 
+  console.log(items);
+
   return (
     <View>
       <FlatList

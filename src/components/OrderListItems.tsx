@@ -17,7 +17,7 @@ const OrderListItems = ({ order }: OrderListItemsProps) => {
   return (
     <Link
       href={{
-        pathname: `/${segments[0]}/orders/${order.id}` as Href<string>,
+        pathname: `/${segments[0]}/orders/[id]` as Href<string>,
         params: { id: `${order.id}` as Href<string> },
       }}
       asChild

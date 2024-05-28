@@ -1,11 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
+import orders from "../../../../assets/data/orders";
 
 const OrdersScreen = () => {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    <FlatList
+      data={orders}
+      renderItem={({ item }) => <Text> {item.created_at}</Text>}
+      numColumns={2}
+      contentContainerStyle={{ gap: 10, padding: 10 }}
+      columnWrapperStyle={{ gap: 10 }}
+    />
   );
 };
 

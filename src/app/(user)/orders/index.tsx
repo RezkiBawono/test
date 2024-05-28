@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import orders from "../../../../assets/data/orders";
+import OrderListItems from "@/components/OrderListItems";
 
 const OrdersScreen = () => {
   return (
     <FlatList
       data={orders}
-      renderItem={({ item }) => <Text> {item.created_at}</Text>}
-      numColumns={2}
-      contentContainerStyle={{ gap: 10, padding: 10 }}
-      columnWrapperStyle={{ gap: 10 }}
+      renderItem={({ item }) => <OrderListItems order={item} />}
+      keyExtractor={(item) => item.id.toString()}
     />
   );
 };

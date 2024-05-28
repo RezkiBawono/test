@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import Colors from "@/constants/Colors";
 import { Href, Link, useSegments } from "expo-router";
 import { Order } from "@/types";
 import relativeTime from "dayjs/plugin/relativeTime";

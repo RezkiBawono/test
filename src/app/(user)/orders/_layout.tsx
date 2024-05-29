@@ -8,8 +8,12 @@ const OrdersStack = () => {
       <Stack.Screen
         name="index"
         options={{
-          headerTitleAlign: "center",
-          headerTitle: "test",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="[id]"
+        options={{
           headerShown: false,
         }}
       />

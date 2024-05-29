@@ -13,11 +13,13 @@ const OrderDetailScreen = () => {
   if (!order) {
     return <Text>Order is not Found</Text>;
   }
-  <OrderListItems order={order} />;
 
   return (
     <View>
       <Stack.Screen options={{ title: `Order # ${order.id}` }} />
+
+      <OrderListItems order={order} />
+
       <FlatList
         data={order.order_items}
         renderItem={({ item }) => <OrderItemListItem item={item} />}

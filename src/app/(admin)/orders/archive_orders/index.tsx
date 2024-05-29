@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import OrderListItems from "@/components/OrderListItems";
-import orders from "../../../../assets/data/orders";
+import orders from "../../../../../assets/data/orders";
 
 const OrdersScreen = () => {
   return (

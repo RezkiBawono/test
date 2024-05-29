@@ -5,8 +5,11 @@ import { Stack } from "expo-router/stack";
 const OrdersStack = () => {
   return (
     <Stack screenOptions={{ headerTitleAlign: "center" }}>
-      <Stack.Screen name="index" options={{ title: "Order" }} />
-      <Stack.Screen name="[id]" options={{}} />
+      {/* <Stack.Screen name="index" options={{ title: "Order" }} /> */}
+      <Stack.Screen
+        name="archive_orders"
+        options={{ title: "Order", headerShown: false }}
+      />
     </Stack>
   );
 };

@@ -6,12 +6,14 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Platform,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Button from "@/components/Button";
 import Colors from "@/constants/Colors";
 import { Link } from "expo-router";
+import { supabase } from "@/lib/supabase";
 
 type FormData = {
   email: string;
@@ -45,12 +47,15 @@ const AuthScreen = () => {
     };
   }, []);
 
-  const onSubmit = (data: FormData) => {
-    setSubmittedData(data);
-    console.log("submittedData :", data);
+  const signUpWithEmail = async (data: FormData) => {
+    // this function is to creating an account with email in the database
+    const { email, password } = data;
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) Alert.alert(error.message);
 
-    // creating an account in the database
+    console.log(data);
   };
+
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {
       reset();
@@ -108,7 +113,10 @@ const AuthScreen = () => {
         )}
 
         <Link href={"/sign-up"} asChild>
-          <Button text="Create an Account" onPress={handleSubmit(onSubmit)} />
+          <Button
+            text="Create an Account"
+            onPress={handleSubmit(signUpWithEmail)}
+          />
         </Link>
         <Link href={"/sign-in"} asChild>
           <Button text="Sign In" />

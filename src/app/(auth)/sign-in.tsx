@@ -29,7 +29,7 @@ const AuthScreen = () => {
     reset,
   } = useForm<FormData>();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [submittedData, setSubmittedData] = useState<FormData>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -49,12 +49,15 @@ const AuthScreen = () => {
 
   const signInWithEmail = async (data: FormData) => {
     // this function is to creating an account with email in the database
+
+    setLoading(false);
     const { email, password } = data;
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) Alert.alert(error.message);
+    setLoading(true);
 
     console.log(data);
   };
@@ -63,7 +66,7 @@ const AuthScreen = () => {
     if (formState.isSubmitSuccessful) {
       reset();
     }
-  }, [formState, submittedData, reset]);
+  }, [formState, reset]);
 
   return (
     <KeyboardAvoidingView
@@ -116,19 +119,15 @@ const AuthScreen = () => {
         )}
 
         <Link href={"/sign-in"} asChild>
-          <Button text="Sign In" onPress={handleSubmit(signInWithEmail)} />
+          <Button
+            text="Sign In"
+            disabled={loading}
+            onPress={handleSubmit(signInWithEmail)}
+          />
         </Link>
         <Link href={"/sign-up"} asChild>
           <Button text="Create an Account" />
         </Link>
-
-        {submittedData && (
-          <View style={styles.submittedContainer}>
-            <Text style={styles.submittedTitle}>Submitted Data:</Text>
-            <Text>Name: {submittedData.email}</Text>
-            <Text>password: {submittedData.password}</Text>
-          </View>
-        )}
       </View>
     </KeyboardAvoidingView>
   );

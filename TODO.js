@@ -4,4 +4,5 @@
 // TODO : create auth screen with sign in and create acc - DONE
 // TODO : make a password form hidden
 // TODO : fixing stack title in user order screen - DONE
-// TODO : making admin order screen
+// TODO : making admin order screen - DONE
+// TODO : configuring supabase

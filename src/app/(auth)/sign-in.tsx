@@ -21,6 +21,8 @@ type FormData = {
 };
 
 const AuthScreen = () => {
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -28,8 +30,21 @@ const AuthScreen = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm<FormData>();
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const signInWithEmail = async (data: FormData) => {
+    // this function is to creating an account with email in the database
+
+    setLoading(false);
+    const { email, password } = data;
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) Alert.alert(error.message);
+    setLoading(true);
+
+    console.log(data);
+  };
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -46,21 +61,6 @@ const AuthScreen = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
-
-  const signInWithEmail = async (data: FormData) => {
-    // this function is to creating an account with email in the database
-
-    setLoading(false);
-    const { email, password } = data;
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) Alert.alert(error.message);
-    setLoading(true);
-
-    console.log(data);
-  };
 
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {

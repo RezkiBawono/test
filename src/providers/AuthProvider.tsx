@@ -1,7 +1,13 @@
-import { createContext, PropsWithChildren } from "react";
+import { createContext, PropsWithChildren, useEffect } from "react";
 
-export const AuthContext = createContext({});
+type AuthData = {};
+
+export const AuthContext = createContext<AuthData>({});
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
+  useEffect(() => {
+    console.log("AuthProvider is mounted");
+  }, []);
+
   return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
 }

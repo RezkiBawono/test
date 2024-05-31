@@ -105,6 +105,7 @@ const AuthScreen = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              contextMenuHidden={true}
               style={[
                 styles.input,
                 keyboardVisible && styles.inputWithKeyboard,

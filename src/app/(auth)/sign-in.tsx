@@ -32,7 +32,7 @@ const AuthScreen = () => {
   } = useForm<FormData>();
 
   const signInWithEmail = async (data: FormData) => {
-    // this function is to creating an account with email in the database
+    // this function is to log in using email password to the database
 
     setLoading(false);
     const { email, password } = data;

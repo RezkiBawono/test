@@ -6,7 +6,6 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
-import { UseCart } from "@/app/provider/CartContext";
 import { PizzaSize } from "@/types";
 import defaultImageLink from "@/constants/DefaultImage";
 

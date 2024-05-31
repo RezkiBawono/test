@@ -5,7 +5,7 @@ import { CartItem } from "../types";
 import { Link } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import defaultImageLink from "@/constants/DefaultImage";
-import { UseCart } from "./provider/CartContext";
+import { UseCart } from "../providers/CartContext";
 
 type CartListItemProps = {
   cartItem: CartItem;

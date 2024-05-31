@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
-import { UseCart } from "./provider/CartContext";
+import { UseCart } from "../providers/CartContext";
 import CartListItem from "./CartListItem";
 import Button from "@/components/Button";
 

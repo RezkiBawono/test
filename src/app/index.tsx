@@ -12,9 +12,9 @@ const IndexScreen = () => {
     return <ActivityIndicator />;
   }
 
-  if (!session) {
-    return <Redirect href={"/sign-in"} />;
-  }
+  // if (!session) {
+  //   return <Redirect href={"/sign-in"} />;
+  // }
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>

@@ -30,7 +30,12 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
 
       setLoading(false);
     };
+
     fetchSession();
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    // this function is to make real-time update session and navigation. Happens when user sign-in, sign-out or create an account that can change the session on app.
   }, []);
 
   return (

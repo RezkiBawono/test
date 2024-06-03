@@ -11,11 +11,15 @@ import {
 type AuthData = {
   session: Session | null;
   loading: Boolean;
+  profile: any;
+  isAdmin: boolean;
 };
 
 export const AuthContext = createContext<AuthData>({
   session: null,
   loading: true,
+  profile: null,
+  isAdmin: false,
 });
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
@@ -54,7 +58,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
   console.log(profile);
 
   return (
-    <AuthContext.Provider value={{ session, loading }}>
+    <AuthContext.Provider value={{ session, loading, profile, isAdmin: false }}>
       {children}
     </AuthContext.Provider>
   );

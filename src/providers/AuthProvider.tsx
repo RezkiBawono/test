@@ -10,7 +10,7 @@ import {
 
 type AuthData = {
   session: Session | null;
-  loading: Boolean;
+  loading: boolean;
   profile: any;
   isAdmin: boolean;
 };
@@ -52,10 +52,8 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-    // this function is to make real-time update session and navigation. Happens when an user sign-in, sign-out or create an account that can change the session on app.
   }, []);
-
-  console.log(profile);
+  // this function is to make real-time update session and navigation. Happens when an user sign-in, sign-out or create an account that can change the session on app.
 
   return (
     <AuthContext.Provider value={{ session, loading, profile, isAdmin: false }}>

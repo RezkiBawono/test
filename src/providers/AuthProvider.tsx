@@ -20,13 +20,26 @@ export const AuthContext = createContext<AuthData>({
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session);
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setSession(session);
       console.log(session);
+
+      if (session) {
+        // fetch profile
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", session.user.id)
+          .single();
+        setProfile(data || null);
+      }
 
       setLoading(false);
     };
@@ -35,8 +48,10 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-    // this function is to make real-time update session and navigation. Happens when user sign-in, sign-out or create an account that can change the session on app.
+    // this function is to make real-time update session and navigation. Happens when an user sign-in, sign-out or create an account that can change the session on app.
   }, []);
+
+  console.log(profile);
 
   return (
     <AuthContext.Provider value={{ session, loading }}>

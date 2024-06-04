@@ -10,7 +10,7 @@ export default function TabOneScreen() {
     return <ActivityIndicator></ActivityIndicator>;
   }
   if (error) {
-    return <Text>Data fetch failed...</Text>;
+    return <Text>Data fetch failed. Please try again.</Text>;
   }
 
   return (

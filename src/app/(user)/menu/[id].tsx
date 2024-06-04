@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Stack } from "expo-router/stack";
-
 import React, { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import products from "../../../../assets/data/products";

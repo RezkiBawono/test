@@ -1,9 +1,6 @@
 import { ActivityIndicator, FlatList, Text } from "react-native";
-
 import ProductListItems from "@/api/ProductListItems";
 import products from "../../../../assets/data/products";
-import { useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 import { useProductList } from "@/api/products";
 
 export default function TabOneScreen() {
@@ -16,15 +13,6 @@ export default function TabOneScreen() {
   if (error) {
     return <Text>Cannot fetch the data...</Text>;
   }
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     const { data, error } = await supabase.from("products").select("*");
-  //     console.log(data);
-  //     console.log(error);
-  //   };
-  //   fetchProducts();
-  // }, []);
 
   return (
     <FlatList

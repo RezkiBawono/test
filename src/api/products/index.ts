@@ -14,9 +14,10 @@ export const useProductList = () => {
     },
   });
 };
+// this function is to fetch product(pizza) list from database and shows it to menu screen
 
 export const useProduct = (id: number) => {
-  return useQuery<Product[]>({
+  return useQuery<Product>({
     queryKey: ["products", id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -31,3 +32,4 @@ export const useProduct = (id: number) => {
     },
   });
 };
+// this function is to fetch product(pizza) by id from database and shows it to pizza detail screen ([id])

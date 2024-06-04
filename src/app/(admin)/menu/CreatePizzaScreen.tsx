@@ -28,6 +28,9 @@ type FormData = {
 };
 
 const CreatePizzaScreen = () => {
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+  const [submittedData, setSubmittedData] = useState<FormData>();
   const {
     control,
     handleSubmit,
@@ -35,9 +38,6 @@ const CreatePizzaScreen = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm<FormData>();
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
-  const [submittedData, setSubmittedData] = useState<FormData>();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

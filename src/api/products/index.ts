@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { Product } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useProductList = () => {
   return useQuery<Product[]>({
@@ -33,3 +33,27 @@ export const useProduct = (id: number) => {
   });
 };
 // this function is to fetch product(pizza) by id from database and shows it to pizza detail screen ([id])
+
+export const useCreateProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(data: any) {
+      const { error } = await supabase.from("products").insert({
+        name: data.name,
+        price: data.price,
+        image: data.image,
+      });
+      if (error) {
+        throw error;
+      }
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+};
+// this function is to create a pizza from admin createscreen to database by using name, price and image.

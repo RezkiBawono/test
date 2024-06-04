@@ -7,3 +7,4 @@
 // TODO : making admin order screen - DONE
 // TODO : configuring supabase - DONE
 // TODO : fixing code isAdmin inside AuthProvider.tsx
+// TODO : what is invalidateQuery?

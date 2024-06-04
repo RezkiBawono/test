@@ -1,6 +1,6 @@
 import { ActivityIndicator, FlatList, Text } from "react-native";
 import ProductListItems from "@/api/ProductListItems";
-import products from "../../../../assets/data/products";
+import products from "../../../../assets/data/products"; // mock local data
 import { useProductList } from "@/api/products";
 
 export default function TabOneScreen() {

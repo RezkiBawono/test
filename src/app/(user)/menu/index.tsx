@@ -9,7 +9,6 @@ export default function TabOneScreen() {
   if (isLoading) {
     return <ActivityIndicator></ActivityIndicator>;
   }
-
   if (error) {
     return <Text>Cannot fetch the data...</Text>;
   }

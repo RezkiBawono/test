@@ -38,11 +38,11 @@ export const useCreateProduct = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    async mutationFn(data: any) {
+    async mutationFn(dataProduct: any) {
       const { error } = await supabase.from("products").insert({
-        name: data.name,
-        price: data.price,
-        image: data.image,
+        name: dataProduct.name,
+        price: dataProduct.price,
+        image: dataProduct.image,
       });
       if (error) {
         throw error;

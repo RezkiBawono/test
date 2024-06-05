@@ -31,8 +31,6 @@ const ProductDetailScreen = () => {
     return <Text>Data fetch failed. Please try again.</Text>;
   }
 
-  const router = useRouter();
-
   // const product = products.find((p) => p.id.toString() == id);
   // This function is to dynamically choose each object inside products - only use for local mock data and is commented when using database.
 

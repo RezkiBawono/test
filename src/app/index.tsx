@@ -16,9 +16,10 @@ const IndexScreen = () => {
     return <Redirect href={"/sign-in"} />;
   }
 
-  if (!isAdmin) {
-    return <Redirect href={"/(user)"} />;
-  }
+  // if (!isAdmin) {
+  //   return <Redirect href={"/(user)"} />;
+  // }
+  // commented to use Admin privelege in dev build
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>

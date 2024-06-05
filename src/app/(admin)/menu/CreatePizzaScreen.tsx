@@ -10,11 +10,13 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
+import { useCreateProduct } from "@/api/products";
+import { router } from "expo-router";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
@@ -25,12 +27,14 @@ import Colors from "@/constants/Colors";
 type FormData = {
   name: string;
   price: string;
+  image: string | null;
 };
 
 const CreatePizzaScreen = () => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [image, setImage] = useState<string | null>(null);
   const [submittedData, setSubmittedData] = useState<FormData>();
+
   const {
     control,
     handleSubmit,
@@ -38,6 +42,7 @@ const CreatePizzaScreen = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm<FormData>();
+  const { mutate: createProduct } = useCreateProduct();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -55,11 +60,20 @@ const CreatePizzaScreen = () => {
     };
   }, []);
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     setSubmittedData(data);
     console.log("submittedData :", data);
 
     // creating a product in database
+    createProduct(
+      { ...data },
+      {
+        onSuccess() {
+          reset();
+          router.back();
+        },
+      }
+    );
   };
   React.useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -75,8 +89,6 @@ const CreatePizzaScreen = () => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);

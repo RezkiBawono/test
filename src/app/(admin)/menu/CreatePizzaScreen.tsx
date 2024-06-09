@@ -15,8 +15,8 @@ import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
-import { useCreateProduct } from "@/api/products";
-import { router } from "expo-router";
+import { useCreateProduct, useUpdateProduct } from "@/api/products";
+import { router, useLocalSearchParams } from "expo-router";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
@@ -42,6 +42,7 @@ const CreatePizzaScreen = () => {
     formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm<FormData>();
+
   const { mutate: createProduct } = useCreateProduct();
 
   useEffect(() => {

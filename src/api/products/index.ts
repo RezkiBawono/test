@@ -82,8 +82,5 @@ export const useUpdateProduct = (id: number) => {
       await queryClient.invalidateQueries({ queryKey: ["products"] });
       await queryClient.invalidateQueries({ queryKey: ["products", data.id] });
     },
-    onError(error) {
-      console.log(error);
-    },
   });
 };

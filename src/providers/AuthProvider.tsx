@@ -33,7 +33,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
         data: { session },
       } = await supabase.auth.getSession();
       setSession(session);
-      console.log(session);
+      // console.log(session);
 
       if (session) {
         // fetch profile

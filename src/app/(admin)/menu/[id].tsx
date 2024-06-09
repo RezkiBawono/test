@@ -7,14 +7,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Stack } from "expo-router/stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { PizzaSize } from "@/types";
 import defaultImageLink from "@/constants/DefaultImage";
-import { useProduct } from "@/api/products";
+import { useCreateProduct, useProduct, useUpdateProduct } from "@/api/products";
 
 const pizzaSize: PizzaSize[] = ["S", "M", "L", "XL"];
 
@@ -23,6 +23,7 @@ const ProductDetailScreen = () => {
   const id = parseInt(typeof idString === "string" ? idString : idString[0]);
 
   const { data: product, error, isLoading } = useProduct(id);
+  const { mutate: updateProduct } = useUpdateProduct(id);
 
   if (isLoading) {
     return <ActivityIndicator></ActivityIndicator>;

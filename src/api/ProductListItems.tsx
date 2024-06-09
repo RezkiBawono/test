@@ -28,7 +28,7 @@ const ProductListItems = ({ product }: ProductListItemsProps) => {
           resizeMode="contain"
         />
         <Text style={styles.names}>{product.name}</Text>
-        <Text style={styles.prices}>{product.price}</Text>
+        <Text style={styles.prices}>$ {product.price}</Text>
       </Pressable>
     </Link>
   );

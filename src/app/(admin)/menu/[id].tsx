@@ -5,25 +5,29 @@ import {
   Image,
   Pressable,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { Stack } from "expo-router/stack";
 import React, { useEffect, useState } from "react";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import {
+  Href,
+  Link,
+  router,
+  useLocalSearchParams,
+  useRouter,
+} from "expo-router";
 import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { PizzaSize } from "@/types";
 import defaultImageLink from "@/constants/DefaultImage";
-import { useCreateProduct, useProduct, useUpdateProduct } from "@/api/products";
-
-const pizzaSize: PizzaSize[] = ["S", "M", "L", "XL"];
+import { useProduct } from "@/api/products";
 
 const ProductDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();
   const id = parseInt(typeof idString === "string" ? idString : idString[0]);
 
   const { data: product, error, isLoading } = useProduct(id);
-  const { mutate: updateProduct } = useUpdateProduct(id);
 
   if (isLoading) {
     return <ActivityIndicator></ActivityIndicator>;
@@ -52,8 +56,15 @@ const ProductDetailScreen = () => {
 
       <Text style={styles.names}>{product.name}</Text>
       <Text style={styles.prices}>${product.price}</Text>
-      <Button text="Update Pizza" />
-      <Button text="Delete Pizza" />
+      <Link
+        href={{
+          pathname: `/(admin)/menu/CreatePizzaScreen?id=${id}` as Href<string>,
+          params: { id: `${id}` as Href<string> },
+        }}
+        asChild
+      >
+        <Button text="Update Pizza" />
+      </Link>
     </View>
   );
 };

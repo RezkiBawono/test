@@ -58,7 +58,7 @@ export const useCreateProduct = () => {
 };
 // this function is to create a pizza from admin createscreen to database by using name, price and image.
 
-export const useUpdateProduct = (id: number) => {
+export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -70,7 +70,7 @@ export const useUpdateProduct = (id: number) => {
           price: dataProduct.price,
           image: dataProduct.image,
         })
-        .eq("id", id)
+        .eq("id", dataProduct.id)
         .select()
         .single();
       if (error) {
@@ -78,9 +78,27 @@ export const useUpdateProduct = (id: number) => {
       }
       return updatedProduct;
     },
-    async onSuccess(_, data) {
+    async onSuccess(_, { id }) {
       await queryClient.invalidateQueries({ queryKey: ["products"] });
-      await queryClient.invalidateQueries({ queryKey: ["products", data.id] });
+      await queryClient.invalidateQueries({ queryKey: ["products", id] });
+    },
+  });
+};
+
+// this function is to update the product detail to the database
+
+export const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(id: number) {
+      const { error } = await supabase.from("products").delete().eq("id", id);
+      if (error) {
+        throw new Error(error.message);
+      }
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
 };

@@ -8,6 +8,8 @@ import {
   Keyboard,
   Platform,
   ScrollView,
+  Alert,
+  Pressable,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -15,8 +17,13 @@ import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
-import { useCreateProduct, useUpdateProduct } from "@/api/products";
-import { router, useLocalSearchParams } from "expo-router";
+import {
+  useCreateProduct,
+  useDeleteProduct,
+  useProduct,
+  useUpdateProduct,
+} from "@/api/products";
+import { Stack, router, useLocalSearchParams, useRouter } from "expo-router";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
@@ -30,10 +37,9 @@ type FormData = {
   image: string | null;
 };
 
-const CreatePizzaScreen = () => {
+const CreatePizzaScreen = (data: FormData) => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const [submittedData, setSubmittedData] = useState<FormData>();
 
   const {
     control,
@@ -41,9 +47,37 @@ const CreatePizzaScreen = () => {
     formState,
     formState: { errors, isSubmitSuccessful },
     reset,
-  } = useForm<FormData>();
+    setValue,
+  } = useForm<FormData>({
+    defaultValues: {
+      name: data.name,
+      price: data.price,
+      image: data.image,
+    },
+  });
+
+  const router = useRouter();
+
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(
+    typeof idString === "string" ? idString : idString?.[0]
+  );
+  const isUpdating = !!id;
 
   const { mutate: createProduct } = useCreateProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
+  const { data: product } = useProduct(id);
+  const { mutate: deleteProduct } = useDeleteProduct();
+
+  React.useEffect(() => {
+    if (product) {
+      setValue("name", product.name);
+      setValue("price", product.price.toString());
+      // Set other fields as needed
+    }
+  }, [product, setValue]);
+
+  console.log(product);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -61,11 +95,7 @@ const CreatePizzaScreen = () => {
     };
   }, []);
 
-  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    setSubmittedData(data);
-    console.log("submittedData :", data);
-
-    // creating a product in database
+  const onCreate = (data: FormData) => {
     createProduct(
       { ...data },
       {
@@ -76,11 +106,53 @@ const CreatePizzaScreen = () => {
       }
     );
   };
-  React.useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
+
+  const onUpdate = (data: FormData) => {
+    updateProduct(
+      { ...data, id },
+      {
+        onSuccess() {
+          reset();
+          router.back();
+        },
+      }
+    );
+  };
+
+  const onDelete = () => {
+    deleteProduct(id, {
+      onSuccess() {
+        router.replace("/(admin)");
+      },
+    });
+  };
+
+  const confirmDelete = () => {
+    Alert.alert("Confirm", "Are you sure you want to delete this product", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: onDelete,
+      },
+    ]);
+  };
+
+  // React.useEffect(() => {
+  //   if (formState.isSubmitSuccessful) {
+  //     reset();
+  //   }
+  // }, [formState, reset]);
+
+  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
+    if (isUpdating) {
+      onUpdate(data);
+    } else {
+      onCreate(data);
     }
-  }, [formState, submittedData, reset]);
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -101,6 +173,10 @@ const CreatePizzaScreen = () => {
       behavior={Platform.OS === "android" ? "padding" : "height"}
       style={styles.container}
     >
+      <Stack.Screen
+        options={{ title: product ? "Update Pizza" : "Create Pizza" }}
+      />
+
       <ScrollView style={styles.scrollView}>
         <Image
           style={styles.image}
@@ -155,15 +231,14 @@ const CreatePizzaScreen = () => {
           <Text style={{ color: "red" }}>{errors.price.message}</Text>
         )}
 
-        <Button text="Create a Pizza" onPress={handleSubmit(onSubmit)} />
-
-        {/* {errors.name && <Text style={styles.errorText}>{errors.name}</Text>} */}
-        {submittedData && (
-          <View style={styles.submittedContainer}>
-            <Text style={styles.submittedTitle}>Submitted Data:</Text>
-            <Text>Name: {submittedData.name}</Text>
-            <Text>Price: {submittedData.price}</Text>
-          </View>
+        <Button
+          text={product ? "Update" : "Create a Pizza"}
+          onPress={handleSubmit(onSubmit)}
+        />
+        {isUpdating && (
+          <Pressable onPress={confirmDelete} style={styles.delete}>
+            <Text>Delete</Text>
+          </Pressable>
         )}
       </ScrollView>
     </KeyboardAvoidingView>
@@ -209,5 +284,12 @@ const styles = StyleSheet.create({
   },
   submittedTitle: {
     margin: 4,
+  },
+  delete: {
+    backgroundColor: Colors.light.tint,
+    padding: 15,
+    alignItems: "center",
+    borderRadius: 100,
+    marginVertical: 10,
   },
 });

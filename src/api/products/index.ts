@@ -102,3 +102,5 @@ export const useDeleteProduct = () => {
     },
   });
 };
+
+// this function is to delete product based on their id in the database

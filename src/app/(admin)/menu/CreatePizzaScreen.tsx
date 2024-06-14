@@ -73,7 +73,7 @@ const CreatePizzaScreen = (data: FormData) => {
     if (product) {
       setValue("name", product.name);
       setValue("price", product.price.toString());
-      // Set other fields as needed
+      setValue("image", product.image);
     }
   }, [product, setValue]);
 

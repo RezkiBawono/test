@@ -65,7 +65,7 @@ export const useUpdateProduct = () => {
     async mutationFn(dataProduct: any) {
       const { data: updatedProduct, error } = await supabase
         .from("products")
-        .insert({
+        .update({
           name: dataProduct.name,
           price: dataProduct.price,
           image: dataProduct.image,

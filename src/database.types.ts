@@ -1,5 +1,5 @@
-// > test@1.0.0 npx;
-// > supabase gen types typescript --project-id gbgwfplllhvlcwxrhaoa;
+// > test@1.0.0 npx
+// > supabase gen types typescript --project-id gbgwfplllhvlcwxrhaoa
 
 export type Json =
   | string
@@ -12,6 +12,80 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      order_items: {
+        Row: {
+          created_at: string;
+          id: number;
+          order_id: number | null;
+          product_id: number | null;
+          quantity: number | null;
+          size: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          order_id?: number | null;
+          product_id?: number | null;
+          quantity?: number | null;
+          size?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          order_id?: number | null;
+          product_id?: number | null;
+          quantity?: number | null;
+          size?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey";
+            columns: ["order_id"];
+            isOneToOne: false;
+            referencedRelation: "orders";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      orders: {
+        Row: {
+          created_at: string;
+          id: number;
+          status: string | null;
+          total: number | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          status?: string | null;
+          total?: number | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          status?: string | null;
+          total?: number | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "Order_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       products: {
         Row: {
           created_at: string;

@@ -7,7 +7,13 @@ import { Href, Link, useSegments } from "expo-router";
 import defaultImageLink from "@/constants/DefaultImage";
 
 type ProductListItemsProps = {
-  product: Product;
+  product: {
+    created_at: string;
+    id: number;
+    image: string | null;
+    name: string | null;
+    price: number | null;
+  };
 };
 
 const ProductListItems = ({ product }: ProductListItemsProps) => {

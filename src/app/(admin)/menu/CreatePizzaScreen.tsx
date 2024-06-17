@@ -23,7 +23,8 @@ import {
   useProduct,
   useUpdateProduct,
 } from "@/api/products";
-import { Stack, router, useLocalSearchParams, useRouter } from "expo-router";
+import { Database } from "@/database.types";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
@@ -32,8 +33,8 @@ import { Stack, router, useLocalSearchParams, useRouter } from "expo-router";
 // TODO : create a simple form validation - DONE
 
 type FormData = {
-  name: string;
-  price: string;
+  name: string | null;
+  price: string | null;
   image: string | null;
 };
 
@@ -72,7 +73,7 @@ const CreatePizzaScreen = (data: FormData) => {
   React.useEffect(() => {
     if (product) {
       setValue("name", product.name);
-      setValue("price", product.price.toString());
+      setValue("price", product.price !== null ? product.price.toString() : "");
       setValue("image", product.image);
     }
   }, [product, setValue]);
@@ -196,7 +197,7 @@ const CreatePizzaScreen = (data: FormData) => {
             <TextInput
               onBlur={onBlur}
               onChangeText={onChange}
-              value={value}
+              value={value ?? undefined}
               style={[
                 styles.input,
                 keyboardVisible && styles.inputWithKeyboard,
@@ -218,7 +219,7 @@ const CreatePizzaScreen = (data: FormData) => {
             <TextInput
               onBlur={onBlur}
               onChangeText={onChange}
-              value={value}
+              value={value ?? undefined}
               style={[
                 styles.input,
                 keyboardVisible && styles.inputWithKeyboard,

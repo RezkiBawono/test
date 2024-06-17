@@ -3,7 +3,7 @@ import { Product } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useProductList = () => {
-  return useQuery<Product[]>({
+  return useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const { data, error } = await supabase.from("products").select("*");
@@ -17,7 +17,7 @@ export const useProductList = () => {
 // this function is to fetch product(pizza) list from database and shows it to menu screen
 
 export const useProduct = (id: number) => {
-  return useQuery<Product>({
+  return useQuery({
     queryKey: ["products", id],
     queryFn: async () => {
       const { data, error } = await supabase

@@ -47,7 +47,10 @@ const ProductDetailScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen
-        options={{ title: product.name, headerTitleAlign: "center" }}
+        options={{
+          title: product.name ?? undefined,
+          headerTitleAlign: "center",
+        }}
       />
       <Image
         style={styles.images}

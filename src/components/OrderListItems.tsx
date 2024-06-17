@@ -9,7 +9,13 @@ import dayjs from "dayjs";
 dayjs.extend(relativeTime);
 
 type OrderListItemsProps = {
-  order: Order;
+  order: {
+    created_at: string;
+    id: number;
+    status: string | null;
+    total: number | null;
+    user_id: string | null;
+  };
 };
 
 const OrderListItems = ({ order }: OrderListItemsProps) => {

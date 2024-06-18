@@ -15,6 +15,17 @@ type AuthData = {
   isAdmin: boolean;
 };
 
+type StateData = {
+  avatar_url: string | null;
+  full_name: string | null;
+  group: string;
+  id: string;
+  updated_at: string | null;
+  username: string | null;
+  website: string | null;
+};
+// use it on setProfile state to fix TS complain
+
 export const AuthContext = createContext<AuthData>({
   session: null,
   loading: true,
@@ -24,7 +35,7 @@ export const AuthContext = createContext<AuthData>({
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<StateData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +43,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
       const {
         data: { session },
       } = await supabase.auth.getSession();
+
       setSession(session);
       // console.log(session);
 

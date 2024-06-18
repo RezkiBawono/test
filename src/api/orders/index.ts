@@ -16,13 +16,23 @@ export const useAdminOrderList = () => {
     },
   });
 };
-// this function is to fetch an order list from database and shows it to menu screen
+// this function is to fetch an order list from database and shows it to menu screen (Admin side)
 
 export const useUserOrderList = () => {
+  const { session } = useAuth();
+  const id = session?.user.id;
+
   return useQuery({
-    queryKey: ["orders"],
+    queryKey: ["orders", { UserId: id }],
     queryFn: async () => {
-      const { data, error } = await supabase.from("orders").select("*");
+      if (!id) {
+        return null;
+      }
+
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("user_id", id);
       if (error) {
         throw new Error(error.message);
       }

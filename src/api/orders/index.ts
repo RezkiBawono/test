@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/providers/AuthProvider";
+import { Tables } from "@/database.types";
 
 export const useAdminOrderList = () => {
   return useQuery({
@@ -59,3 +60,25 @@ export const useOrderDetails = (id: number) => {
   });
 };
 // this function is to fetch order by id from database and shows order detail screen ([id])
+
+export const useCreateOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(data: Tables<"orders">) {
+      const { error } = await supabase.from("orders").insert({
+        data,
+      });
+      if (error) {
+        throw error;
+      }
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+};
+// this function is to create a pizza from admin createscreen to database by using name, price and image.

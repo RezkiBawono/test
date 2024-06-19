@@ -1,12 +1,15 @@
 import { createContext, useContext, PropsWithChildren, useState } from "react";
 import { CartItem, Product } from "@/types";
 import { randomUUID } from "expo-crypto";
+import { useCreateOrder } from "@/api/orders";
+import { useRouter } from "expo-router";
 
 type CartProvider = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
   updateQuantity: (itemId: string, amount: -1 | 1) => void;
   total: number;
+  checkout: () => void;
 };
 
 export const CartContext = createContext<CartProvider>({
@@ -14,11 +17,15 @@ export const CartContext = createContext<CartProvider>({
   addItem: () => {},
   updateQuantity: () => {},
   total: 0,
+  checkout: () => {},
 });
 // This variable is a default and adress to TS standart
 
 export default function CartContextProvider({ children }: PropsWithChildren) {
   const [items, setItems] = useState<CartItem[]>([]);
+
+  const { mutate: createOrder } = useCreateOrder();
+  const router = useRouter();
 
   const addItem = (product: Product, size: CartItem["size"]) => {
     const existingItems = items.find(
@@ -59,8 +66,27 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
   const total = parseFloat(totalString);
   // convert from string to number
 
+  const clearCart = () => {
+    setItems([]);
+  };
+
+  const checkout = () => {
+    createOrder(
+      { total },
+      {
+        onSuccess(data) {
+          console.log(data);
+
+          clearCart(), router.push(`/(user)/menu/${data.id}`);
+        },
+      }
+    );
+  };
+
   return (
-    <CartContext.Provider value={{ items, addItem, updateQuantity, total }}>
+    <CartContext.Provider
+      value={{ items, addItem, updateQuantity, total, checkout }}
+    >
       {children}
     </CartContext.Provider>
   );

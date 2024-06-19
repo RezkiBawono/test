@@ -69,17 +69,17 @@ export const useCreateOrder = () => {
     async mutationFn(data: InsertTables<"orders">) {
       const { error, data: createOrder } = await supabase
         .from("orders")
-        .insert({ ...data, userId: userId });
+        .insert({ ...data, userId: userId })
+        .select()
+        .single();
       if (error) {
         throw error;
       }
+
       return createOrder;
     },
     async onSuccess() {
       await queryClient.invalidateQueries({ queryKey: ["orders"] });
-    },
-    onError(error) {
-      console.log(error);
     },
   });
 };

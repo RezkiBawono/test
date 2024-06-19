@@ -1,9 +1,8 @@
-import { Session } from "@supabase/supabase-js";
+import { InsertTables } from "./../../types";
 import { supabase } from "@/lib/supabase";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/providers/AuthProvider";
-import { Tables } from "@/database.types";
 
 export const useAdminOrderList = () => {
   return useQuery({
@@ -63,22 +62,25 @@ export const useOrderDetails = (id: number) => {
 
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
+  const { session } = useAuth();
+  const userId = session?.user.id;
 
   return useMutation({
-    async mutationFn(data: Tables<"orders">) {
-      const { error } = await supabase.from("orders").insert({
-        data,
-      });
+    async mutationFn(data: InsertTables<"orders">) {
+      const { error, data: createOrder } = await supabase
+        .from("orders")
+        .insert({ ...data, userId: userId });
       if (error) {
         throw error;
       }
+      return createOrder;
     },
     async onSuccess() {
-      await queryClient.invalidateQueries({ queryKey: ["products"] });
+      await queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
     onError(error) {
       console.log(error);
     },
   });
 };
-// this function is to create a pizza from admin createscreen to database by using name, price and image.
+// this function is to create an order from the user(spesific by their ID)

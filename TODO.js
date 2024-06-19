@@ -6,5 +6,6 @@
 // TODO : fixing stack title in user order screen - DONE
 // TODO : making admin order screen - DONE
 // TODO : configuring supabase - DONE
-// TODO : fixing code isAdmin inside AuthProvider.tsx
-// TODO : what is invalidateQuery?
+// TODO : fixing code isAdmin inside AuthProvider.tsx - DONE
+// TODO : what is invalidateQuery? - DONE
+// TODO : fixing [id] admin and user order details

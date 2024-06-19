@@ -1,27 +1,37 @@
-import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItems from "@/components/OrderListItems";
-import orders from "../../../../assets/data/orders";
 import Colors from "@/constants/Colors";
 import { OrderStatusList } from "@/types";
+import { useOrderDetails } from "@/api/orders";
 
 const OrderDetailScreen = () => {
-  const { id } = useLocalSearchParams();
+  const { id: idString } = useLocalSearchParams();
+  const id = parseInt(typeof idString === "string" ? idString : idString[0]);
 
-  const order = orders.find((o) => o.id.toString() == id);
+  const { data: order, error, isLoading } = useOrderDetails(id);
 
-  if (!order) {
-    return <Text>Order is not Found</Text>;
+  if (isLoading) {
+    return <ActivityIndicator></ActivityIndicator>;
   }
-
+  if (error || !order) {
+    return <Text>Data fetch failed. Please try again.</Text>;
+  }
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: `Order # ${order.id}` }} />
 
       <FlatList
-        data={order.order_items}
+        data={order}
         renderItem={({ item }) => <OrderItemListItem item={item} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ gap: 10 }}

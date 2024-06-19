@@ -40,3 +40,22 @@ export const useUserOrderList = () => {
     },
   });
 };
+// this function is to fetch an order list from database and shows it to menu screen (User side)
+
+export const useOrderDetails = (id: number) => {
+  return useQuery({
+    queryKey: ["orders", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("id", id)
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    },
+  });
+};
+// this function is to fetch order by id from database and shows order detail screen ([id])

@@ -65,8 +65,8 @@ export type Database = {
         Insert: {
           created_at?: string;
           id?: number;
-          status?: string | null;
-          total?: number | null;
+          status?: string;
+          total?: number;
           user_id?: string | null;
         };
         Update: {

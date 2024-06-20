@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabase";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/providers/AuthProvider";
+import { randomUUID } from "expo-crypto";
 
 export const useAdminOrderList = () => {
   return useQuery({
@@ -69,13 +70,12 @@ export const useCreateOrder = () => {
     async mutationFn(data: InsertTables<"orders">) {
       const { error, data: createOrder } = await supabase
         .from("orders")
-        .insert({ ...data, userId: userId })
+        .insert({ ...data, user_Id: userId })
         .select()
         .single();
       if (error) {
-        throw error;
+        throw new Error(error.message);
       }
-
       return createOrder;
     },
     async onSuccess() {

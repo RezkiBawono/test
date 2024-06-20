@@ -1,25 +1,8 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Pressable,
-  ActivityIndicator,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, Image, ActivityIndicator } from "react-native";
 import { Stack } from "expo-router/stack";
-import React, { useEffect, useState } from "react";
-import {
-  Href,
-  Link,
-  router,
-  useLocalSearchParams,
-  useRouter,
-} from "expo-router";
-import products from "../../../../assets/data/products";
+import { Href, Link, useLocalSearchParams } from "expo-router";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
-import { PizzaSize } from "@/types";
 import defaultImageLink from "@/constants/DefaultImage";
 import { useProduct } from "@/api/products";
 

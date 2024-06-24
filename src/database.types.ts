@@ -16,26 +16,26 @@ export type Database = {
         Row: {
           created_at: string;
           id: number;
-          order_id: number | null;
-          product_id: number | null;
-          quantity: number | null;
-          size: string | null;
+          order_id: number;
+          product_id: number;
+          quantity: number;
+          size: string;
         };
         Insert: {
           created_at?: string;
           id?: number;
-          order_id?: number | null;
-          product_id?: number | null;
-          quantity?: number | null;
-          size?: string | null;
+          order_id: number;
+          product_id: number;
+          quantity?: number;
+          size?: string;
         };
         Update: {
           created_at?: string;
           id?: number;
-          order_id?: number | null;
-          product_id?: number | null;
-          quantity?: number | null;
-          size?: string | null;
+          order_id?: number;
+          product_id?: number;
+          quantity?: number;
+          size?: string;
         };
         Relationships: [
           {
@@ -58,23 +58,23 @@ export type Database = {
         Row: {
           created_at: string;
           id: number;
-          status: string | null;
-          total: number | null;
-          user_id: string | null;
+          status: string;
+          total: number;
+          user_id: string;
         };
         Insert: {
           created_at?: string;
           id?: number;
           status?: string;
           total?: number;
-          user_id?: string | null;
+          user_id?: string;
         };
         Update: {
           created_at?: string;
           id?: number;
-          status?: string | null;
-          total?: number | null;
-          user_id?: string | null;
+          status?: string;
+          total?: number;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -91,22 +91,22 @@ export type Database = {
           created_at: string;
           id: number;
           image: string | null;
-          name: string | null;
-          price: number | null;
+          name: string;
+          price: number;
         };
         Insert: {
           created_at?: string;
           id?: number;
           image?: string | null;
-          name?: string | null;
-          price?: number | null;
+          name: string;
+          price: number;
         };
         Update: {
           created_at?: string;
           id?: number;
           image?: string | null;
-          name?: string | null;
-          price?: number | null;
+          name?: string;
+          price?: number;
         };
         Relationships: [];
       };

@@ -1,8 +1,11 @@
 import { createContext, useContext, PropsWithChildren, useState } from "react";
-import { CartItem, Product } from "@/types";
+import { CartItem } from "@/types";
 import { randomUUID } from "expo-crypto";
 import { useCreateOrder } from "@/api/orders";
 import { useRouter } from "expo-router";
+import { Tables } from "@/database.types";
+
+type Product = Tables<"products">;
 
 type CartProvider = {
   items: CartItem[];

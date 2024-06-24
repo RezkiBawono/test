@@ -9,7 +9,6 @@ import {
 import { Stack } from "expo-router/stack";
 import React, { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import products from "../../../../assets/data/products";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { PizzaSize } from "@/types";
@@ -20,12 +19,15 @@ import { useProduct } from "@/api/products";
 const pizzaSize: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailScreen = () => {
-  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
-
   const { id: idString } = useLocalSearchParams();
   const id = parseInt(typeof idString === "string" ? idString : idString[0]);
 
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
+
   const { data: product, error, isLoading } = useProduct(id);
+
+  const { addItem } = UseCart();
+  const router = useRouter();
 
   if (isLoading) {
     return <ActivityIndicator></ActivityIndicator>;
@@ -33,9 +35,6 @@ const ProductDetailScreen = () => {
   if (error || !product) {
     return <Text>Data fetch failed. Please try again.</Text>;
   }
-
-  const { addItem } = UseCart();
-  const router = useRouter();
 
   // const product = products.find((p) => p.id.toString() == id);
   // This function is to dynamically choose each object inside products - only use for local mock data and is commented when using database.

@@ -15,7 +15,6 @@ const Profile = () => {
       </View>
       <View style={styles.button}>
         <Button text="Back to App" onPress={() => route.navigate("/")} />
-
         <Button text="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>

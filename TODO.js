@@ -10,4 +10,6 @@
 // TODO : what is invalidateQuery? - DONE
 // TODO : fixing [id] admin and user order details - DONE
 // TODO : data is failed to fetch after creating an user order
-// TODO : working on useDeleteOrder
+// TODO : working on useDeleteOrder -DONE
+// TODO : change Profile page name to current user
+// TODO : working on useUpdateOrder

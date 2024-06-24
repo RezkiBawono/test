@@ -1,6 +1,5 @@
 import { InsertTables } from "./../../types";
 import { supabase } from "@/lib/supabase";
-
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/providers/AuthProvider";
 import { randomUUID } from "expo-crypto";

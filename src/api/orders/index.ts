@@ -70,7 +70,7 @@ export const useCreateOrder = () => {
     async mutationFn(data: InsertTables<"orders">) {
       const { error, data: createOrder } = await supabase
         .from("orders")
-        .insert({ ...data, user_Id: userId })
+        .insert({ ...data, user_id: userId })
         .select()
         .single();
       if (error) {

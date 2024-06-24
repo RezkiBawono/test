@@ -76,7 +76,7 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
 
   const checkout = () => {
     createOrder(
-      {},
+      { total },
       {
         onSuccess(data) {
           clearCart(), router.push(`/(user)/menu/${data.id}`);

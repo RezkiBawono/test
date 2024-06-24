@@ -8,4 +8,6 @@
 // TODO : configuring supabase - DONE
 // TODO : fixing code isAdmin inside AuthProvider.tsx - DONE
 // TODO : what is invalidateQuery? - DONE
-// TODO : fixing [id] admin and user order details
+// TODO : fixing [id] admin and user order details - DONE
+// TODO : data is failed to fetch after creating an user order
+// TODO : working on useDeleteOrder

@@ -84,3 +84,21 @@ export const useCreateOrder = () => {
   });
 };
 // this function is to create an order from the user(spesific by their ID)
+
+export const useDeleteOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(id: number) {
+      const { error } = await supabase.from("orders").delete().eq("id", id);
+      if (error) {
+        throw new Error(error.message);
+      }
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
+  });
+};
+
+// this function is to delete product based on their id in the database

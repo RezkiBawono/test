@@ -101,4 +101,4 @@ export const useDeleteOrder = () => {
   });
 };
 
-// this function is to delete product based on their id in the database
+// this function is to delete an order based on their user id in the database

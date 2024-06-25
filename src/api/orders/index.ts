@@ -1,4 +1,4 @@
-import { InsertTables } from "./../../types";
+import { InsertTables, UpdateTables } from "./../../types";
 import { supabase } from "@/lib/supabase";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/providers/AuthProvider";
@@ -83,6 +83,33 @@ export const useCreateOrder = () => {
   });
 };
 // this function is to create an order from the user(spesific by their ID)
+
+export const useUpdateOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(data: UpdateTables<"orders">) {
+      const { data: updatedOrder, error } = await supabase
+        .from("orders")
+        .update({
+          ...data,
+        })
+        .eq("id", data.id ? data.id : "")
+        .select()
+        .single();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return updatedOrder;
+    },
+    async onSuccess(_, { id }) {
+      await queryClient.invalidateQueries({ queryKey: ["orders"] });
+      await queryClient.invalidateQueries({ queryKey: ["orders", id] });
+    },
+  });
+};
+
+// this function is to update an order
 
 export const useDeleteOrder = () => {
   const queryClient = useQueryClient();

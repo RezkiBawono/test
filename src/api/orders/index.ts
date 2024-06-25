@@ -88,13 +88,17 @@ export const useUpdateOrder = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    async mutationFn(data: UpdateTables<"orders">) {
+    async mutationFn({
+      id,
+      updatedFields,
+    }: {
+      id: number;
+      updatedFields: UpdateTables<"orders">;
+    }) {
       const { data: updatedOrder, error } = await supabase
         .from("orders")
-        .update({
-          ...data,
-        })
-        .eq("id", data.id ? data.id : "")
+        .update(updatedFields)
+        .eq("id", id)
         .select()
         .single();
       if (error) {

@@ -1,16 +1,12 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
-import React from "react";
+import { StyleSheet, Text, FlatList, ActivityIndicator } from "react-native";
 import OrderListItems from "@/components/OrderListItems";
 import { useAdminOrderList } from "@/api/orders";
+import { useCreateOrderSubscription } from "@/api/orders/subscription";
 
 const OrdersScreen = () => {
   const { data: orders, isLoading, isError } = useAdminOrderList();
+
+  useCreateOrderSubscription();
 
   if (isLoading) {
     return <ActivityIndicator></ActivityIndicator>;

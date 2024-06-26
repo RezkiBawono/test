@@ -25,6 +25,10 @@ import {
 } from "@/api/products";
 import { Database } from "@/database.types";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { randomUUID } from "expo-crypto";
+import { supabase } from "@/lib/supabase";
+import { decode } from "base64-arraybuffer";
+import * as FileSystem from "expo-file-system";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
@@ -96,9 +100,31 @@ const CreatePizzaScreen = (data: FormData) => {
     };
   }, []);
 
-  const onCreate = (data: FormData) => {
+  const uploadImage = async () => {
+    if (!image?.startsWith("file://")) {
+      return;
+    }
+
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: "base64",
+    });
+    const filePath = `${randomUUID()}.png`;
+    // this function is to create a random filename for an image so they don't collide/clash with the same filename on database
+    const contentType = "image/png";
+    const { data, error } = await supabase.storage
+      .from("product-images")
+      .upload(filePath, decode(base64), { contentType });
+
+    if (data) {
+      return data.path;
+    }
+  };
+
+  const onCreate = async (data: FormData) => {
+    const imagePath = await uploadImage();
+
     createProduct(
-      { ...data },
+      { ...data, image: imagePath },
       {
         onSuccess() {
           reset();

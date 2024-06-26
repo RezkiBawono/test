@@ -5,12 +5,13 @@ import { Product } from "@/types";
 import Colors from "@/constants/Colors";
 import { Href, Link, useSegments } from "expo-router";
 import defaultImageLink from "@/constants/DefaultImage";
+import RemoteImage from "@/components/RemoteImage";
 
 type ProductListItemsProps = {
   product: {
     created_at: string;
     id: number;
-    image: string | null;
+    image: string | undefined;
     name: string | null;
     price: number | null;
   };
@@ -28,9 +29,10 @@ const ProductListItems = ({ product }: ProductListItemsProps) => {
       asChild
     >
       <Pressable style={styles.container}>
-        <Image
+        <RemoteImage
+          fallback={defaultImageLink}
+          path={product.image}
           style={styles.images}
-          source={{ uri: product.image || defaultImageLink }}
           resizeMode="contain"
         />
         <Text style={styles.names}>{product.name}</Text>

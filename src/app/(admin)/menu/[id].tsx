@@ -5,6 +5,7 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import defaultImageLink from "@/constants/DefaultImage";
 import { useProduct } from "@/api/products";
+import RemoteImage from "@/components/RemoteImage";
 
 const ProductDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();
@@ -35,9 +36,11 @@ const ProductDetailScreen = () => {
           headerTitleAlign: "center",
         }}
       />
-      <Image
+      <RemoteImage
+        fallback={defaultImageLink}
+        path={product.image ? product.image : ""}
         style={styles.images}
-        source={{ uri: product.image || defaultImageLink }}
+        resizeMode="contain"
       />
 
       <Text style={styles.names}>{product.name}</Text>

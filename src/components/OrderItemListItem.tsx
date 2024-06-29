@@ -3,16 +3,23 @@ import React from "react";
 import { OrderItem } from "@/types";
 import defaultImageLink from "@/constants/DefaultImage";
 import Colors from "@/constants/Colors";
+import RemoteImage from "./RemoteImage";
+import { Tables } from "@/database.types";
 
 type OrderListItemsListProps = {
-  item: OrderItem;
+  item: { products: Tables<"products"> } & Tables<"order_items">;
 };
 
 const OrderItemListItem = ({ item }: OrderListItemsListProps) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: item.products.image || defaultImageLink }}
+      <RemoteImage
+        fallback={defaultImageLink}
+        path={
+          item.products.image
+            ? item.products.image
+            : "Failed fetching the image"
+        }
         style={styles.image}
         resizeMode="contain"
       />

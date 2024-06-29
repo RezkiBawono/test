@@ -13,6 +13,7 @@ import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItems from "@/components/OrderListItems";
 import { useDeleteOrder, useOrderDetails } from "@/api/orders";
 import Colors from "@/constants/Colors";
+import { OrderItem } from "@/types";
 
 const OrderDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();
@@ -55,18 +56,16 @@ const OrderDetailScreen = () => {
     <View>
       <Stack.Screen options={{ title: `Order # ${order.id}` }} />
 
-      <OrderListItems order={order} />
-
-      <Pressable onPress={confirmDelete} style={styles.delete}>
-        <Text style={styles.textDelete}>Delete Order</Text>
-      </Pressable>
-
       <FlatList
         data={order}
         renderItem={({ item }) => <OrderItemListItem item={item} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ gap: 10 }}
+        ListHeaderComponent={() => <OrderListItems order={order} />}
       />
+      <Pressable onPress={confirmDelete} style={styles.delete}>
+        <Text style={styles.textDelete}>Delete Order</Text>
+      </Pressable>
     </View>
   );
 };

@@ -13,6 +13,7 @@ import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItems from "@/components/OrderListItems";
 import { useDeleteOrder, useOrderDetails } from "@/api/orders";
 import Colors from "@/constants/Colors";
+import TestComponents from "@/components/TestComponents";
 
 const OrderDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();
@@ -52,8 +53,10 @@ const OrderDetailScreen = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Stack.Screen options={{ title: `Order # ${order.id}` }} />
+
+      <TestComponents />
 
       <FlatList
         data={order}
@@ -74,7 +77,6 @@ export default OrderDetailScreen;
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    flex: 1,
     gap: 10,
   },
   delete: {

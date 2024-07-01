@@ -3,7 +3,7 @@ import React from "react";
 import defaultImageLink from "@/constants/DefaultImage";
 import Colors from "@/constants/Colors";
 import RemoteImage from "./RemoteImage";
-import { Tables } from "@/database.types";
+import { Tables } from "@/types";
 
 type OrderListItemsListProps = {
   item: { products: Tables<"products"> } & Tables<"order_items">;
@@ -35,8 +35,6 @@ const OrderItemListItem = ({ item }: OrderListItemsListProps) => {
     </View>
   );
 };
-
-export default OrderItemListItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -77,3 +75,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default OrderItemListItem;

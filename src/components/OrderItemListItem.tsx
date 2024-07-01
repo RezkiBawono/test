@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import { OrderItem } from "@/types";
 import defaultImageLink from "@/constants/DefaultImage";
 import Colors from "@/constants/Colors";
 import RemoteImage from "./RemoteImage";

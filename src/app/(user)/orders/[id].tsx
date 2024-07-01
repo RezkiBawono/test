@@ -13,7 +13,6 @@ import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItems from "@/components/OrderListItems";
 import { useDeleteOrder, useOrderDetails } from "@/api/orders";
 import Colors from "@/constants/Colors";
-import { OrderItem } from "@/types";
 
 const OrderDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();

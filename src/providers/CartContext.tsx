@@ -80,7 +80,6 @@ export default function CartContextProvider({ children }: PropsWithChildren) {
       {
         onSuccess(data) {
           clearCart(), router.push(`/(user)/menu/${data.id}`);
-          console.log(data);
         },
       }
     );

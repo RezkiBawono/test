@@ -11,9 +11,9 @@ type ProductListItemsProps = {
   product: {
     created_at: string;
     id: number;
-    image: string | undefined;
-    name: string | null;
-    price: number | null;
+    image: string | null;
+    name: string;
+    price: number;
   };
 };
 
@@ -31,7 +31,7 @@ const ProductListItems = ({ product }: ProductListItemsProps) => {
       <Pressable style={styles.container}>
         <RemoteImage
           fallback={defaultImageLink}
-          path={product.image}
+          path={product.image ? product.image : ""}
           style={styles.images}
           resizeMode="contain"
         />

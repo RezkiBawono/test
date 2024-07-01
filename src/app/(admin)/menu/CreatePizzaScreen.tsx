@@ -29,6 +29,7 @@ import { randomUUID } from "expo-crypto";
 import { supabase } from "@/lib/supabase";
 import { decode } from "base64-arraybuffer";
 import * as FileSystem from "expo-file-system";
+import RemoteImage from "@/components/RemoteImage";
 
 // TODO : create a simple error handling - DONE
 // TODO : make sure the keyboard doesnt obstruct the form - DONE
@@ -134,9 +135,11 @@ const CreatePizzaScreen = (data: FormData) => {
     );
   };
 
-  const onUpdate = (data: FormData) => {
+  const onUpdate = async (data: FormData) => {
+    const imagePath = await uploadImage();
+
     updateProduct(
-      { ...data, id },
+      { ...data, id, image: imagePath },
       {
         onSuccess() {
           reset();
@@ -205,9 +208,10 @@ const CreatePizzaScreen = (data: FormData) => {
       />
 
       <ScrollView style={styles.scrollView}>
-        <Image
+        <RemoteImage
+          fallback={defaultImageLink}
+          path={product?.image ? product?.image : "Failed to show the pizza"}
           style={styles.image}
-          source={{ uri: image || defaultImageLink }}
           resizeMode="contain"
         />
         <Text onPress={pickImage} style={styles.textButton}>
